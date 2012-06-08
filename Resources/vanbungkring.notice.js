@@ -18,13 +18,14 @@ var NoticeView = function(van_notice) {
 			_noticeSuccess = Titanium.UI.createView({
 				height : 50,
 				width : 320,
-				backgroundColor : '#336699',
+				//backgroundColor : '#336699',
 				top : -50,
 			});
 			_imageViewStatus = Ti.UI.createImageView({
 				width : 28,
 				height : 28
 			})
+			_noticeSuccess.add(_imageViewStatus);
 			_noticeSuccessLabel = Ti.UI.createLabel({
 				color : "#FFF",
 				font : {
@@ -38,7 +39,7 @@ var NoticeView = function(van_notice) {
 				height : 16
 
 			})
-
+			_noticeSuccess.add(_noticeSuccessLabel);
 		})();
 
 	this.show = function(van_notice) {
@@ -58,10 +59,20 @@ var NoticeView = function(van_notice) {
 				}
 			}
 		}
+		if (van_notice.error == false) {
+			_noticeSuccess.backgroundColor = '#ff6600'
+		} else {
+			_noticeSuccess.backgroundColor = '#000'
+
+		}
 		_window.add(_noticeSuccess);
 	}
 	this.hide = function(van_notice) {
-		alert('hide');
+		_noticeSuccess.animate({
+			top : -50,
+			right : 0,
+			duration : 500
+		});
 	}
 	var setNoticeLabel = function(van_notice) {
 		var _width = Ti.UI.createLabel({
@@ -73,6 +84,6 @@ var NoticeView = function(van_notice) {
 			width : "auto"
 		}).toImage().width + 20;
 
-		//_labelActivityIndicator.text = (van_notice.text) ? van_notice.text : van_notice.textId;
+		_noticeSuccessLabel.text = (van_notice.text) ? van_notice.text : van_notice.textId;
 	}
 }
